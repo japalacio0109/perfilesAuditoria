@@ -1,4 +1,7 @@
 class AuCrudController < ApplicationController
+  layout :admin
+  before_action :profile
+
   def index
     @t_result = AuCrud.all
   end

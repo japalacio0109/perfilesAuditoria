@@ -1,4 +1,7 @@
 class GnTercController < ApplicationController
+  layout :admin
+  before_action :profile
+
   def index
     @t_result = GnTerc.all
   end

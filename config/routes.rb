@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post 're_prue/save', to: 're_prue#save', as: "pruesave"
   post 're_prue/delete', to: 're_prue#delete', as: "pruedelete"
 
+  get 're_prue/search', to: 're_prue#search', as: "pruesearch"
+
   get 'gn_terc/', to: 'gn_terc#index', as: 'tercindex'
   get 'gn_terc/new', to: 'gn_terc#new', as: 'tercnew'
   get 'gn_terc/edit/:id', to: 'gn_terc#edit', as: 'tercedit'

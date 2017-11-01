@@ -1,4 +1,6 @@
 class GnTdocController < ApplicationController
+  layout "admin"
+  
   def index
     @t_result = GnTdoc.all
   end

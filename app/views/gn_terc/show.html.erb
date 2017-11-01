@@ -3,21 +3,56 @@
   <div class="panel-body">
     <div class="form-horizontal form-label-left">
       <div class="form-group">
-        <%= label_tag 'pru_desc', 'Descripción', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+        <%= label_tag 'ter_iden', 'Número de Documento', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
         <div class="col-md-3 col-sm-3 col-xs-12">
-          <p class="form-control"><%= @nuevo.pru_desc%></p>
+          <p class="form-control"><%= @nuevo.ter_iden%></p>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag 'pru_date', 'Fecha', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+        <%= label_tag 'apellidos', 'Apellidos', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
         <div class="col-md-3 col-sm-3 col-xs-12">
-          <p class="form-control"><%= @nuevo.pru_date%></p>
+          <p class="form-control"><%= ("#{@nuevo.ter_pape} #{@nuevo.ter_sape}").titleize%></p>
         </div>
       </div>
+      <div class="form-group">
+        <%= label_tag 'nombres', 'Nombre(s)', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <p class="form-control"><%= ("#{@nuevo.ter_pnom} #{@nuevo.ter_snom}").titleize%></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag 'ter_usua', 'Usuario', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <p class="form-control"><%= @nuevo.ter_usua%></p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag 'tus_cont', 'Tipo de usuario', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <p class="form-control"><%= @nuevo.gn_tusu.tus_desc%></p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag 'ter_acti', 'Estado', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+
+          <% if @nuevo.ter_acti == true%>
+            <p class="btn btn-success btn-xs"> Activo
+          <% else %>
+            <p class="btn btn-danger btn-xs"> Inactivo
+          <% end %>
+            </p>
+
+        </div>
+      </div>
+
+
       <div class="ln_solid"></div>
       <center>
-        <a href="<%= prueindex_url%>" class="btn btn-default"><i class="fa fa-long-arrow-left"></i> Volver Atrás</a>
-        <a href="<%= prueedit_path(@nuevo.pru_cont)%>" class="btn btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+        <a href="<%= tercindex_url%>" class="btn btn-default"><i class="fa fa-long-arrow-left"></i> Volver Atrás</a>
+        <a href="<%= tercedit_path(@nuevo.ter_cont)%>" class="btn btn-warning"><i class="fa fa-pencil"></i> Editar</a>
       </center>
     </div>
 
