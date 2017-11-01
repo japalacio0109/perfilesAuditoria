@@ -1,0 +1,22 @@
+<%= form_tag("#{pruesave_url}", id: :form , :class => "form-horizontal form-label-left") do %>
+  <%= hidden_field_tag "pru_cont",@nuevo.pru_cont%>
+  <div class="form-group">
+    <%= label_tag 'pru_desc', 'Descripción', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= text_field_tag "pru_desc", @nuevo.pru_desc,:class => "form-control"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= label_tag 'pru_date', 'Fecha', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= date_field_tag "pru_date", @nuevo.pru_date,:class => "form-control"%>
+    </div>
+  </div>
+
+  <div class="ln_solid"></div>
+  <center>
+    <a href="<%= prueindex_url%>" class="btn btn-default">Volver Atrás</a>
+    <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+    <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+  </center>
+<% end %>

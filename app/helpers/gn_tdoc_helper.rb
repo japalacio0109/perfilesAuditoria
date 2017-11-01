@@ -1,0 +1,2 @@
+module GnTdocHelper
+end

@@ -1,0 +1,2 @@
+module GnTusuHelper
+end

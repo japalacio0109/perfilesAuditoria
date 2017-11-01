@@ -1,0 +1,44 @@
+Rails.application.routes.draw do
+  get 're_prue/', to: 're_prue#index', as: 'prueindex'
+  get 're_prue/show/:id', to: 're_prue#show', as: 'prueshow'
+  get 're_prue/edit/:id', to: 're_prue#edit', as: 'prueedit'
+  get 're_prue/new', to: 're_prue#new', as: 'pruenew'
+  post 're_prue/save', to: 're_prue#save', as: "pruesave"
+  post 're_prue/delete', to: 're_prue#delete', as: "pruedelete"
+
+  get 'gn_terc/', to: 'gn_terc#index', as: 'tercindex'
+  get 'gn_terc/new', to: 'gn_terc#new', as: 'tercnew'
+  get 'gn_terc/edit/:id', to: 'gn_terc#edit', as: 'tercedit'
+  get 'gn_terc/show/:id', to: 'gn_terc#show', as: 'tercshow'
+  post 'gn_terc/save', to: 'gn_terc#save', as: "tercsave"
+  post 'gn_terc/delete', to: 'gn_terc#delete', as: "tercdelete"
+  # post 'gn_terc/disable', to: 'gn_terc#disable', as: "tercdisable"
+
+
+  get 'logs/system'
+
+  get 'logs/auditDB'
+
+  get 'home/', to: 'home#index', as: "home"
+
+  get 'login/', to: 'login#index', as: "login"
+  post 'login/auth', to: 'login#auth', as: "loginauth"
+  get 'logout/', to: 'login#logout', as: "logout"
+
+  get 'gn_tusu/', to: 'gn_tusu#index', as: "tusuindex"
+  post 'gn_tusu/save', to: 'gn_tusu#save', as: "tususave"
+  post 'gn_tusu/show', to: 'gn_tusu#show', as: "tusushow"
+  post 'gn_tusu/delete', to: 'gn_tusu#delete', as: "tusudelete"
+
+  get 'gn_tdoc/', to: 'gn_tdoc#index', as: "tdocindex"
+  post 'gn_tdoc/save', to: 'gn_tdoc#save', as: "tdocsave"
+  post 'gn_tdoc/show', to: 'gn_tdoc#show', as: "tdocshow"
+  post 'gn_tdoc/delete', to: 'gn_tdoc#delete', as: "tdocdelete"
+
+  get 'au_crud/', to: 'au_crud#index', as: "crudindex"
+  post 'au_crud/save', to: 'au_crud#save', as: "crudsave"
+  post 'au_crud/show', to: 'au_crud#show', as: "crudshow"
+  post 'au_crud/delete', to: 'au_crud#delete', as: "cruddelete"
+
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+end

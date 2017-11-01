@@ -1,0 +1,2 @@
+module GnTercHelper
+end

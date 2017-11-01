@@ -1,0 +1,82 @@
+<%= form_tag("#{tercsave_url}", id: :form , :class => "form-horizontal form-label-left") do %>
+  <%= hidden_field_tag "ter_cont",@nuevo.ter_cont%>
+
+  <div class="form-group">
+    <%= label_tag 'tdo_cont', 'Tipo de Documento', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= select_tag "tdo_cont", options_from_collection_for_select(@f_tdoc, "tdo_cont", "tdo_desc", @nuevo.tdo_cont),{:prompt => "Seleccione tipo de documento",:class => "form-control"}%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'ter_iden', 'Nº de Documento', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= number_field_tag "ter_iden", @nuevo.ter_iden,:class => "form-control"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= label_tag 'ter_pnom', 'Nombres', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= text_field_tag "ter_pnom", @nuevo.ter_pnom,:class => "form-control"%>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= text_field_tag "ter_snom", @nuevo.ter_snom,:class => "form-control"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= label_tag 'ter_pape', 'Apellidos', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= text_field_tag "ter_pape", @nuevo.ter_pape,:class => "form-control"%>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= text_field_tag "ter_sape", @nuevo.ter_sape,:class => "form-control"%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'ter_usua', 'Usuario', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= text_field_tag "ter_usua", @nuevo.ter_usua,:class => "form-control"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= label_tag 'tus_cont', 'Tipo de Usuario', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= select_tag "tus_cont", options_from_collection_for_select(@f_tusu, "tus_cont", "tus_desc", @nuevo.tus_cont),{:prompt => "Seleccione tipo de usuario",:class => "form-control"}%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'ter_pass', 'Contraseña', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= password_field_tag "ter_pass", nil,:class => "form-control"%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'confirmar', 'Confirme Contraseña', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <%= password_field_tag "confirmar", nil,:class => "form-control"%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'ter_acti', 'Estado', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <% if @nuevo.ter_acti == true%>
+        <% acti = 1%>
+      <% else %>
+        <% acti = 0%>
+      <% end %>
+      <%= select_tag "ter_acti", options_for_select([['Activo',1],['Inactivo',0]],acti),{:class => "form-control", :prompt => "Seleccione un estado"}%>
+    </div>
+  </div>
+
+
+  <div class="ln_solid"></div>
+  <center>
+    <a href="<%= tercindex_url%>" class="btn btn-default">Volver Atrás</a>
+    <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+    <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+  </center>
+<% end %>

@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">Formulario de Registro</div>
+    <div class="panel-body">
+      <div class="responses">
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key%>">
+            <%= simple_format value%>
+          </div>
+        <% end %>
+      </div>
+      <%= form_tag("#{tdocsave_url}", id: :form , :class => "form-horizontal form-label-left") do %>
+        <%= hidden_field_tag "tdo_cont"%>
+        <div class="form-group">
+          <%= label_tag 'tdo_desc', 'Descripción', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+          <div class="col-md-3 col-sm-3 col-xs-12">
+            <%= text_field_tag "tdo_desc", nil,:class => "form-control"%>
+          </div>
+        </div>
+
+        <div class="ln_solid"></div>
+        <center>
+          <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+          <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+        </center>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Registros en sistema</div>
+    <div class="panel-body">
+      <table class="table datatable">
+        <thead>
+          <tr>
+            <th>Nº</th>
+            <th>Descripción</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @t_result.each do |row|%>
+          <tr>
+            <td><%= row.tdo_cont%></td>
+            <td><%= row.tdo_desc.titleize%></td>
+            <td>
+              <a onclick="mostrar(<%=row.tdo_cont%>)" class="btn btn-xs btn-default"><i class="fa fa-search"></i> Ver/Modificar</a>
+              <a onclick="borrar(<%=row.tdo_cont%>)" class="btn btn-xs btn-danger mostrar"><i class="fa fa-trash"></i> Borrar</a>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+function mostrar(id) {
+  $.ajax({
+    url: "<%= tdocshow_url%>",
+    type: "POST",
+    contextType: "json",
+    data: {authenticity_token: window._token,
+            form: {
+              id: id
+            }
+          },
+    success: function(data, textStatus, jqXHR){
+      if (data != null) {
+        $("#tdo_desc").val(data["tdo_desc"]);
+        $("#tdo_cont").val(data["tdo_cont"]);
+
+      }else{
+        $("#response").html("<div class='alert alert-danger'>No se Encontró el registro</div>");
+      }
+    },
+    error: function(data, textStatus, jqXHR){
+      console.log(jqXHR);
+    }
+  });
+}
+
+function borrar(id) {
+  $.ajax({
+    url: "<%= tdocdelete_url%>",
+    type: "POST",
+    contextType: "json",
+    data: {authenticity_token: window._token,
+            form: {
+              id: id
+            }
+          },
+    success: function(data, textStatus, jqXHR){
+      if (data != null) {
+        if (data["tipo"] == "success") {
+
+        }
+        $(".responses").html("<div class='alert alert-"+data["tipo"]+"'>"+data["mensaje"]+"</div>")
+
+      }else{
+        $(".responses").html("<div class='alert alert-danger'> Error, intente más tarde</div>")
+
+      }
+      console.log(data);
+    },
+    error: function(data, textStatus, jqXHR){
+      console.log(jqXHR);
+    }
+  });
+}
+
+$(".mostrar").on('click', function(event) {
+    $(this).parent().parent().remove();
+});
+
+  </script>
+
+</div>
