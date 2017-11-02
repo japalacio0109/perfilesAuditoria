@@ -1,6 +1,7 @@
 class GnTdocController < ApplicationController
-  layout "admin"
-  
+  layout :admin
+  before_action :profile
+
   def index
     @t_result = GnTdoc.all
   end

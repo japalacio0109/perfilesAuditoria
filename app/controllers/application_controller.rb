@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   def profile
     if session[:data]
     else
-      redirect_to home_url
+      redirect_to login_url
     end
   end
 end

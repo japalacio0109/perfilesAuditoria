@@ -7,14 +7,6 @@ class RePrueController < ApplicationController
     @nuevo = RePrue.new
   end
 
-  def search
-    if params[:search]
-      if params[:search] != "" and params[:search]
-        @t_result = RePrue.where("pru_desc = :search",{search: params[:search]})
-      end
-    end
-  end
-
   def save
     if form_params[:pru_cont] == "" or form_params[:pru_cont] == nil
       nuevo = RePrue.new
