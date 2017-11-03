@@ -1,4 +1,7 @@
 class RePrueController < ApplicationController
+  before_action :profile, :usuario
+  layout :resolve_layout
+
   def index
     @t_result = RePrue.all
   end
@@ -18,13 +21,18 @@ class RePrueController < ApplicationController
       end
 
       nuevo.pru_cont = ultimo
+      dba_dpro = 3
     else
+      oldd = RePrue.find_by(pru_cont: form_params[:pru_cont])
       nuevo = RePrue.find_by(pru_cont: form_params[:pru_cont])
+      dba_dpro = 4
     end
 
     nuevo.pru_desc = form_params[:pru_desc]
     nuevo.pru_date = form_params[:pru_date]
     if nuevo.save
+      dba_aprob = 1
+      resolve_log(nuevo.as_json,oldd,session[:user],dba_aprob,dba_dpro)
       flash[:success] = "Acción exitosa"
     else
       flash[:danger] = "Error, intente de nuevo mas tarde"
@@ -48,6 +56,8 @@ class RePrueController < ApplicationController
       mensaje = "Intente de nuevo mas tarde"
       tipo = "danger"
     end
+    dba_aprob = 1
+    resolve_log(nil,nil,session[:user],dba_aprob,5)
     render json: {mensaje: mensaje, tipo: tipo}
   end
 

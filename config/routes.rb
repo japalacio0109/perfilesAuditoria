@@ -17,9 +17,7 @@ Rails.application.routes.draw do
   # post 'gn_terc/disable', to: 'gn_terc#disable', as: "tercdisable"
 
 
-  get 'logs/system'
-
-  get 'logs/auditDB'
+  get 'logs/system', to: 'logs#system', as: "logs"
 
   get 'home/', to: 'home#index', as: "home"
 

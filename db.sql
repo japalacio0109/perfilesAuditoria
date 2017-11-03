@@ -48,17 +48,24 @@ DROP TABLE IF EXISTS `au_dbau`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `au_dbau` (
   `dba_cont` int(11) NOT NULL AUTO_INCREMENT,
+  `dba_rout` varchar(500) NOT NULL,
+  `dba_client` varchar(200) NOT NULL,
+  `dba_ip` varchar(16) NOT NULL,
+  `dba_urlp` varchar(500) DEFAULT NULL,
   `dba_oldd` text,
   `dba_newd` text,
   `cru_cont` int(11) NOT NULL,
-  `ter_cont` int(11) NOT NULL,
+  `dba_dpro` int(11) NOT NULL,
+  `ter_cont` int(11) DEFAULT NULL,
   `dba_aprob` tinyint(1) NOT NULL,
   PRIMARY KEY (`dba_cont`),
   KEY `fk_au_dbau_au_crud1_idx` (`cru_cont`),
   KEY `fk_au_dbau_gn_terc1_idx` (`ter_cont`),
+  KEY `data_process_idx` (`dba_dpro`),
+  CONSTRAINT `data_process` FOREIGN KEY (`dba_dpro`) REFERENCES `au_crud` (`cru_cont`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_au_dbau_au_crud1` FOREIGN KEY (`cru_cont`) REFERENCES `au_crud` (`cru_cont`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_au_dbau_gn_terc1` FOREIGN KEY (`ter_cont`) REFERENCES `gn_terc` (`ter_cont`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +74,7 @@ CREATE TABLE `au_dbau` (
 
 LOCK TABLES `au_dbau` WRITE;
 /*!40000 ALTER TABLE `au_dbau` DISABLE KEYS */;
+INSERT INTO `au_dbau` VALUES (1,'/login/auth','g-ginfo.local','127.0.0.1','{\"utf8\"=>\"✓\", \"authenticity_token\"=>\"1hZ05QQ9/ZeWTa962ByspEcfP26bHTpOSOEERMH6IFrmADhHujjRFVQwo3xDeNvXrCw2D4B+HE8l+c2Bg2HsCg==\", \"user\"=>\"camilo123\", \"pass\"=>\"12345\", \"commit\"=>\"Iniciar Sesión\", \"controller\"=>\"login\", \"action\"=>\"auth\"}',NULL,'Iniciar sesión',1,3,2,1),(2,'/home','g-ginfo.local','127.0.0.1','{\"controller\"=>\"home\", \"action\"=>\"index\"}',NULL,'{\"controller\"=>\"home\", \"action\"=>\"index\"}',2,6,2,1),(3,'/logs/system','g-ginfo.local','127.0.0.1','{\"controller\"=>\"logs\", \"action\"=>\"system\"}',NULL,NULL,2,6,2,1);
 /*!40000 ALTER TABLE `au_dbau` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +128,7 @@ CREATE TABLE `gn_terc` (
   KEY `fk_gn_terc_gn_tusu1_idx` (`tus_cont`),
   CONSTRAINT `fk_gn_terc_gn_tdoc` FOREIGN KEY (`tdo_cont`) REFERENCES `gn_tdoc` (`tdo_cont`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_gn_terc_gn_tusu1` FOREIGN KEY (`tus_cont`) REFERENCES `gn_tusu` (`tus_cont`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +137,7 @@ CREATE TABLE `gn_terc` (
 
 LOCK TABLES `gn_terc` WRITE;
 /*!40000 ALTER TABLE `gn_terc` DISABLE KEYS */;
-INSERT INTO `gn_terc` VALUES (1,1070615270,'jeyson','anibal','palacio','palma',1,'japalacio0108','8cb2237d0679ca88db6464eac60da96345513964',1,1,0,0);
+INSERT INTO `gn_terc` VALUES (1,1070615270,'jeyson','anibal','palacio','palma',1,'japalacio0108','8cb2237d0679ca88db6464eac60da96345513964',1,1,0,1),(2,1234567,'camilo','andres','lopez','urquijo',1,'camilo123','8cb2237d0679ca88db6464eac60da96345513964',1,2,1,0);
 /*!40000 ALTER TABLE `gn_terc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +152,7 @@ CREATE TABLE `gn_tusu` (
   `tus_cont` int(11) NOT NULL AUTO_INCREMENT,
   `tus_desc` varchar(45) NOT NULL,
   PRIMARY KEY (`tus_cont`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,6 +176,7 @@ CREATE TABLE `re_prue` (
   `pru_cont` int(11) NOT NULL AUTO_INCREMENT,
   `pru_desc` varchar(45) NOT NULL,
   `pru_date` date NOT NULL,
+  `pru_priva` varchar(200) NOT NULL,
   PRIMARY KEY (`pru_cont`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -178,7 +187,7 @@ CREATE TABLE `re_prue` (
 
 LOCK TABLES `re_prue` WRITE;
 /*!40000 ALTER TABLE `re_prue` DISABLE KEYS */;
-INSERT INTO `re_prue` VALUES (1,'registro de prueba','2017-10-15'),(2,'registro de prueba 2','2017-10-25');
+INSERT INTO `re_prue` VALUES (1,'registro de prueba','2017-10-15','prueba de valor privado 1'),(2,'registro de prueba 2','2017-10-25','prueba de valor privado 2');
 /*!40000 ALTER TABLE `re_prue` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -191,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-01  8:06:09
+-- Dump completed on 2017-11-03 18:02:45

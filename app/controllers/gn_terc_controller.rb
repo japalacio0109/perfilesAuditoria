@@ -1,6 +1,6 @@
 class GnTercController < ApplicationController
-  layout :admin
-  before_action :profile
+  before_action :profile, :administrador
+  layout :resolve_layout
 
   def index
     @t_result = GnTerc.all
@@ -37,6 +37,7 @@ class GnTercController < ApplicationController
 
   def save
     if form_params[:ter_cont] == "" or form_params[:ter_cont] == nil
+      oldd = nil
       nuevo = GnTerc.new
       ultimo = GnTerc.all.last
       if ultimo == nil
@@ -46,8 +47,12 @@ class GnTercController < ApplicationController
       end
 
       nuevo.ter_cont = ultimo
+      dba_dpro = 3
     else
+      oldd = GnTerc.find_by(ter_cont: form_params[:ter_cont]).as_json
       nuevo = GnTerc.find_by(ter_cont: form_params[:ter_cont])
+      dba_dpro = 4
+
     end
 
     nuevo.tdo_cont = form_params[:tdo_cont]
@@ -62,6 +67,8 @@ class GnTercController < ApplicationController
     nuevo.ter_acti = form_params[:ter_acti]
     nuevo.ter_onli = 0
     if nuevo.save
+      dba_aprob = 1
+      resolve_log(nuevo.as_json,oldd,session[:user],dba_aprob,dba_dpro)
       flash[:success] = "Acción exitosa"
     else
       flash[:danger] = "Error, intente de nuevo mas tarde"
@@ -77,6 +84,8 @@ class GnTercController < ApplicationController
       mensaje = "Intente de nuevo mas tarde"
       tipo = "danger"
     end
+    dba_aprob = 1
+    resolve_log(nil,nil,session[:user],dba_aprob,5)
     render json: {mensaje: mensaje, tipo: tipo}
   end
 

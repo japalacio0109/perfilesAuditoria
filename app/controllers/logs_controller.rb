@@ -1,10 +1,8 @@
 class LogsController < ApplicationController
-  layout :admin
-  before_action :profile
+  before_action :profile, :auditor
+  layout :resolve_layout
 
   def system
   end
 
-  def auditDB
-  end
 end

@@ -1,6 +1,6 @@
 class AuCrudController < ApplicationController
-  layout :admin
-  before_action :profile
+  before_action :profile, :administrador
+  layout :resolve_layout
 
   def index
     @t_result = AuCrud.all
@@ -8,6 +8,7 @@ class AuCrudController < ApplicationController
 
   def save
     if form_params[:cru_cont] == "" or form_params[:cru_cont] == nil
+      oldd = nil
       nuevo = AuCrud.new
       ultimo = AuCrud.all.last
       if ultimo == nil
@@ -17,12 +18,17 @@ class AuCrudController < ApplicationController
       end
 
       nuevo.cru_cont = ultimo
+      dba_dpro = 3
     else
+      oldd = AuCrud.find_by(cru_cont: form_params[:cru_cont]).as_json
       nuevo = AuCrud.find_by(cru_cont: form_params[:cru_cont])
+      dba_dpro = 4
     end
 
     nuevo.cru_desc = form_params[:cru_desc]
     if nuevo.save
+      dba_aprob = 1
+      resolve_log(nuevo.as_json,oldd,session[:user],dba_aprob,dba_dpro)
       flash[:success] = "Acción exitosa"
     else
       flash[:danger] = "Error, intente de nuevo mas tarde"
@@ -32,6 +38,8 @@ class AuCrudController < ApplicationController
 
   def show
     busq = AuCrud.find_by(cru_cont: show_params[:id])
+    dba_aprob = 1
+    resolve_log(nuevo.as_json,oldd.as_json,session[:user],dba_aprob,nil)
     render json: busq
   end
 
@@ -43,6 +51,8 @@ class AuCrudController < ApplicationController
       mensaje = "Intente de nuevo mas tarde"
       tipo = "danger"
     end
+    dba_aprob = 1
+    resolve_log(nil,nil,session[:user],dba_aprob,5)
     render json: {mensaje: mensaje, tipo: tipo}
   end
 

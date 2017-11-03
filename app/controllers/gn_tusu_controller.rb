@@ -1,6 +1,6 @@
 class GnTusuController < ApplicationController
-  layout :admin
-  before_action :profile
+  before_action :profile, :administrador
+  layout :resolve_layout
 
   def index
     @t_result = GnTusu.all
@@ -8,6 +8,7 @@ class GnTusuController < ApplicationController
 
   def save
     if form_params[:tus_cont] == "" or form_params[:tus_cont] == nil
+      oldd = nil
       nuevo = GnTusu.new
       ultimo = GnTusu.all.last
       if ultimo == nil
@@ -17,12 +18,18 @@ class GnTusuController < ApplicationController
       end
 
       nuevo.tus_cont = ultimo
+      dba_dpro = 3
     else
+      oldd = GnTusu.find_by(tus_cont: form_params[:tus_cont]).as_json
       nuevo = GnTusu.find_by(tus_cont: form_params[:tus_cont])
+      dba_dpro = 4
+
     end
 
     nuevo.tus_desc = form_params[:tus_desc]
     if nuevo.save
+      dba_aprob = 1
+      resolve_log(nuevo.as_json,oldd,session[:user],dba_aprob,dba_dpro)
       flash[:success] = "Acción exitosa"
     else
       flash[:danger] = "Error, intente de nuevo mas tarde"
@@ -43,6 +50,8 @@ class GnTusuController < ApplicationController
       mensaje = "Intente de nuevo mas tarde"
       tipo = "danger"
     end
+    dba_aprob = 1
+    resolve_log(nil,nil,session[:user],dba_aprob,5)
     render json: {mensaje: mensaje, tipo: tipo}
   end
 

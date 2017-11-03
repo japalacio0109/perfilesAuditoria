@@ -3,25 +3,32 @@
   <div class="container">
     <div class="row">
           <div class="col-md-6 col-md-offset-3">
+            <div class="responses">
+              <% flash.each do |key, value|%>
+              <div class="alert alert-<%=key%>">
+                <%= value%>
+              </div>
+              <% end %>
+            </div>
           <center><h2>Búsqueda de Prueba</h2></center>
               <div id="custom-search-input">
                 <%= form_tag("#{home_url}", id: :form, method: :get) do %>
                   <div class="input-group">
-                    <div class="input-group-btn">
-                            <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-search"></span>
-                                <span class="label-icon">Busca en Todo</span>
+                    <div class="input-group-btn" >
+                            <button type="button" class="btn btn-search btn-default btn-lg dropdown-toggle" data-toggle="dropdown" style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <span class="label-icon">Busca Persona</span>
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu pull-left" role="menu">
+                            <ul class="dropdown-menu menu2 pull-left" role="menu">
                                <li>
-                                    <a onclick="cambiar('principal')">
-                                        <span class="glyphicon glyphicon-search"></span>
-                                        <span class="label-icon">Buscar Personas</span>
+                                    <a onclick="cambiar2('persona')">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <span class="label-icon">Buscar Persona</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a onclick="cambiar('articulo')">
+                                    <a onclick="cambiar2('registro')">
                                     <span class="fa fa-newspaper-o"></span>
                                     <span class="label-icon">Buscar Registros</span>
                                     </a>
@@ -29,17 +36,32 @@
 
                             </ul>
                         </div>
-                      <input type="text" class="form-control input-lg" id="search" name="search" placeholder="Buscar" style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);"/>
+                      <input type="text" class="form-control input-lg" name="search" placeholder="Buscar" style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);"/>
                       <span class="input-group-btn">
                           <button class="btn btn-default btn-lg" type="submit" style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);">
                               <i class="glyphicon glyphicon-search"></i>
                           </button>
                       </span>
+                      <select class="" name="per" id="env2" style="display: none;">
+                        <option value="persona">Persona</option>
+                        <option value="registro">Registros</option>
+                      </select>
+                    </div>
                     <% end %>
-                  </div>
               </div>
           </div>
     </div>
+    <script type="text/javascript">
+        $(function(){
+         $(".menu2 li a").click(function(){
+             var selText = $(this).html();
+            $(this).parents('.input-group-btn').find('.btn-search').html(selText);
+          });
+        });
+        function cambiar2(data) {
+          $("#env2").val(data);
+        }
+      </script>
 
 
   </div>
