@@ -1,2 +1,101 @@
 <h1>Logs#system</h1>
 <p>Find me in app/views/logs/system.html.erb</p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Parámetros de Búsqueda
+  </div>
+
+  <div class="panel-body">
+
+  </div>
+
+
+
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Resultados de Búsqueda
+  </div>
+
+  <div class="panel-body">
+    <table class="table datatable" id="datatable">
+      <thead>
+        <tr>
+          <th></th>
+          <% @t_field.each do |row|%>
+          <th><%= row%></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @t_result.each do |row| %>
+        <% if row.dba_aprob == true%>
+          <% if (row.dba_dpro == 3) || (row.dba_dpro == 4) || (row.dba_dpro == 5)%>
+            <tr class="warning">
+          <% else %>
+            <tr class="success">
+          <% end %>
+        <% else %>
+          <tr class="danger">
+        <% end %>
+            <td></td>
+            <td><%= row.dba_cont%></td>
+            <td><%= row.dba_fech%></td>
+            <td><%= ("#{row.au_crud.cru_desc} - #{row.au_crud2.cru_desc}")%></td>
+            <td><%= row.dba_rout%></td>
+            <td><%= ("#{row.dba_ip} - #{row.dba_client}")%></td>
+            <% if row.ter_cont != nil%>
+              <td><%= row.gn_terc.ter_usua%></td>
+              <% else %>
+              <td> Desconocido</td>
+            <% end %>
+            <td><%= row.dba_urlp%></td>
+            <td><br>Antiguos datos (Actualización): <%= row.dba_oldd%><br>
+              Nuevos datos: <%=row.dba_newd%><br>
+            </td>
+            <% if row.dba_aprob == true%>
+              <td>Aprobado</td>
+            <% else %>
+              <td>No Aprobado</td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+
+  <script>
+    // var table = $("#datatable").DataTable();
+    // $('#datatable tbody').on('click', 'td.details-control', function () {
+    //     var tr = $(this).closest('tr');
+    //     var row = table.row( tr );
+    //
+    //     if ( row.child.isShown() ) {
+    //         // This row is already open - close it
+    //         row.child.hide();
+    //         tr.removeClass('shown');
+    //     }
+    //     else {
+    //         // Open this row
+    //         row.child( format(row.data()) ).show();
+    //         tr.addClass('shown');
+    //     }
+    // } );
+    $('#datatable').DataTable( {
+        responsive: {
+            details: {
+                type: 'column'
+            }
+        },
+        columnDefs: [ {
+            className: 'control',
+            orderable: false,
+            targets:   0
+        } ],
+        order: [ 1, 'asc' ]
+    } );
+  </script>
+
+</div>

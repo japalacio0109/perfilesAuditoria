@@ -3,4 +3,5 @@ class AuCrud < ActiveRecord::Base
     self.primary_key = :cru_cont
 
     has_many :au_dbaus, :class_name => 'AuDbau', :foreign_key => :cru_cont
+    has_many :au_dbauss, :class_name => 'AuDbau', :foreign_key => :cru_cont
 end

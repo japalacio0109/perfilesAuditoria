@@ -54,6 +54,8 @@
     </div>
   </div>
   <script>
+  window._token = "<%= form_authenticity_token %>";
+  
 function mostrar(id) {
   $.ajax({
     url: "<%= tdocshow_url%>",

@@ -48,6 +48,8 @@
     </div>
   </div>
   <script>
+  window._token = "<%= form_authenticity_token %>";
+  
 function borrar(id) {
   $.ajax({
     url: "<%= tercdelete_url%>",

@@ -6,6 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.1/css/dataTables.responsive.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="http://www.datatables.net/release-datatables/extensions/TableTools/css/dataTables.tableTools.css"> -->
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js"></script>
+
+    <style>
+
+    td.control {
+        background: url('http://next.datatables.net/examples/resources/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+    tr.shown td.control {
+        background: url('http://next.datatables.net/examples/resources/details_close.png') no-repeat center center;
+    }
+
+    td.data {font-size:9px}
+
+    </style>
   </head>
 
   <body >

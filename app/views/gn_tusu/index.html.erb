@@ -54,6 +54,7 @@
     </div>
   </div>
   <script>
+  window._token = "<%= form_authenticity_token %>";
 function mostrar(id) {
   $.ajax({
     url: "<%= tusushow_url%>",
@@ -80,6 +81,7 @@ function mostrar(id) {
 }
 
 function borrar(id) {
+  console.log(id);
   $.ajax({
     url: "<%= tusudelete_url%>",
     type: "POST",

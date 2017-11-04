@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
     else
       dba_aprob = 0
       resolve_log(nil,nil,session[:user],dba_aprob,nil)
+      flash[:danger] = "Inicie sesión para continuar"
       redirect_to login_url
     end
   end

@@ -43,6 +43,7 @@ class GnTusuController < ApplicationController
   end
 
   def delete
+    p show_params
     if GnTusu.where(tus_cont: show_params[:id]).delete_all
       mensaje = "Acción Exitosa"
       tipo = "success"

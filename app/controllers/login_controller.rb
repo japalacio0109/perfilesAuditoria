@@ -59,7 +59,7 @@ class LoginController < ApplicationController
     busq.ter_onli = 0
     busq.save
     dba_aprob = 1
-    resolve_log("Iniciar sesión",nil,ter_cont,dba_aprob,5)
+    resolve_log("Cerrar sesión",nil,ter_cont,dba_aprob,5)
     session.delete(:user)
     redirect_to login_url
   end
