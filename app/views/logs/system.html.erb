@@ -6,7 +6,200 @@
   </div>
 
   <div class="panel-body">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="#general" role="tab" data-toggle="tab">General</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#date" role="tab" data-toggle="tab">Por fecha</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#usuario" role="tab" data-toggle="tab">Usuario</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#request" role="tab" data-toggle="tab">Tipo de Request</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#crud" role="tab" data-toggle="tab">Proceso CRUD</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#state" role="tab" data-toggle="tab">Estados</a>
+      </li>
+    </ul>
 
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="general">
+        <h3>Búsqueda General</h3>
+        <%= form_tag("#{logs_url}", id: :form ,method: :get, :class => "form-horizontal form-label-left") do %>
+          <div class="form-group">
+            <%= label_tag 'dba_fech', 'Registros entre', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="datetime-local" name="fini" value="" class="form-control">
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="datetime-local" name="fina" value="" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'dba_usua', 'Buscar Usuario', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="text" name="usua" value="" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'request', 'Tipo de Request', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <select class="form-control" name="request">
+                <option value=""> Todos</option>
+                <option value="2"> Get</option>
+                <option value="1"> Post</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'crud', 'Tipo de proceso CRUD', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <select class="form-control" name="crud">
+                <option value=""> Todos</option>
+                <option value="3"> Create</option>
+                <option value="4"> Update</option>
+                <option value="5"> Delete</option>
+                <option value="6"> Read</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'state', "Estado de Solicitudes", :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <select class="form-control" name="state">
+                <option value=""> Todos</option>
+                <option value="1"> Aprobado</option>
+                <option value="0"> No Aprobado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+          <center>
+            <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+            <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+          </center>
+        <% end %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="date">
+        <h3>Búsqueda por Fechas</h3>
+        <%= form_tag("#{logs_url}", id: :form ,method: :get, :class => "form-horizontal form-label-left") do %>
+          <div class="form-group">
+            <%= label_tag 'dba_fech', 'Registros entre', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="datetime-local" name="fini" value="" class="form-control">
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="datetime-local" name="fina" value="" class="form-control">
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+          <center>
+            <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+            <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+          </center>
+        <% end %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="usuario">
+        <h3>Búsqueda por Usuario</h3>
+        <%= form_tag("#{logs_url}", id: :form ,method: :get, :class => "form-horizontal form-label-left") do %>
+
+          <div class="form-group">
+            <%= label_tag 'dba_usua', 'Buscar Usuario', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="text" name="usua" value="" class="form-control">
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+          <center>
+            <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+            <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+          </center>
+        <% end %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="request">
+        <h3>Búsqueda por Tipo de Solicitud</h3>
+        <%= form_tag("#{logs_url}", id: :form ,method: :get, :class => "form-horizontal form-label-left") do %>
+
+          <div class="form-group">
+            <%= label_tag 'request', 'Tipo de Request', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <select class="form-control" name="request">
+                <option value=""> Todos</option>
+                <option value="2"> Get</option>
+                <option value="1"> Post</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+          <center>
+            <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+            <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+          </center>
+        <% end %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="crud">
+        <h3>Búsqueda Proceso CRUD</h3>
+        <%= form_tag("#{logs_url}", id: :form ,method: :get, :class => "form-horizontal form-label-left") do %>
+
+
+          <div class="form-group">
+            <%= label_tag 'crud', 'Tipo de proceso CRUD', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <select class="form-control" name="crud">
+                <option value=""> Todos</option>
+                <option value="3"> Create</option>
+                <option value="4"> Update</option>
+                <option value="5"> Delete</option>
+                <option value="6"> Read</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+          <center>
+            <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+            <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+          </center>
+        <% end %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="state">
+        <h3>Búsqueda por Estado de Solicitud</h3>
+        <%= form_tag("#{logs_url}", id: :form ,method: :get, :class => "form-horizontal form-label-left") do %>
+
+
+          <div class="form-group">
+            <%= label_tag 'state', "Estado de Solicitudes", :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <select class="form-control" name="state">
+                <option value=""> Todos</option>
+                <option value="1"> Aprobado</option>
+                <option value="0"> No Aprobado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+          <center>
+            <%= submit_tag "Guardar", id: :guardar, :class => "btn btn-success"%>
+            <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
+          </center>
+        <% end %>
+      </div>
+    </div>
   </div>
 
 
@@ -63,6 +256,14 @@
         <% end %>
       </tbody>
     </table>
+
+    <div class="clearfix"></div>
+    <div class="paginator">
+      <center>
+        <h3>Resultados</h3>
+        <%= paginate @t_result %>
+      </center>
+    </div>
   </div>
 
 
