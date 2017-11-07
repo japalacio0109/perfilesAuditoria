@@ -112,6 +112,56 @@ $(".mostrar").on('click', function(event) {
     $(this).parent().parent().remove();
 });
 
+$("#form").bootstrapValidator({
+  feedbackIcons: {
+    valid: 'glyphicon glyphicon-ok',
+    invalid: 'glyphicon glyphicon-remove',
+    validating: 'glyphicon glyphicon-refresh'
+
+  },
+  fields: {
+    cru_desc:{
+      validators:{
+        stringLength: {
+          min: 3,
+          message: 'Cantidad mínima de caracteres 3'
+        },
+        notEmpty:{
+          message: 'Ingrese una descripción'
+        }
+      }
+    }
+
+  }
+})
+.on('success.form.bv', function(e){
+
+});
+
+// ter_iden:{
+//       validators:{
+//         stringLength: {
+//           min: 8,
+//           message: 'Cantidad mínima de caracteres 8'
+//         },
+//         notEmpty:{
+//           message: 'Ingrese Número de Documento'
+//         },
+//         remote: {
+//             url: '<%= tercdocument_url%>',
+//             data: function(validator) {
+//                        return {
+//                           authenticity_token: window._token,
+//                           form: {
+//                            ter_cont: $('#ter_iden').val()
+//                          }
+//                        };
+//                     },
+//             type: 'POST',
+//             message: 'Documento no válido'
+//         }
+//       }
+//     },
   </script>
 
 </div>

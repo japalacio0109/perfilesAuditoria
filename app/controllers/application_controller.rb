@@ -82,7 +82,18 @@ class ApplicationController < ActionController::Base
     nuevo.dba_rout = request.path_info
     nuevo.dba_cont = ultimo
     nuevo.dba_newd = dba_newd
-    nuevo.dba_urlp = request.params
+    parameters = request.params
+    if parameters[:pass]
+      filter = "[FILTERED]"
+      parameters[:pass] = filter
+
+    end
+    if parameters[:ter_pass]
+      filter = "[FILTERED]"
+      parameters[:ter_pass] = filter
+    end
+
+    nuevo.dba_urlp = parameters
     nuevo.dba_oldd = dba_oldd
     cru_cont = AuCrud.find_by(cru_desc: request.method.downcase).cru_cont
     if dba_dpro == nil

@@ -20,3 +20,39 @@
     <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
   </center>
 <% end %>
+
+<script>
+$("#form").bootstrapValidator({
+  feedbackIcons: {
+    valid: 'glyphicon glyphicon-ok',
+    invalid: 'glyphicon glyphicon-remove',
+    validating: 'glyphicon glyphicon-refresh'
+
+  },
+  fields: {
+    pru_desc:{
+      validators:{
+        stringLength: {
+          min: 8,
+          message: 'Cantidad mínima de caracteres 8'
+        },
+        notEmpty:{
+          message: 'Ingrese una descripción'
+        }
+      }
+    },
+    pru_date:{
+      validators:{
+        notEmpty:{
+          message: 'Ingrese una fecha válida'
+        }
+      }
+    }
+
+  }
+})
+.on('success.form.bv', function(e){
+
+});
+
+</script>

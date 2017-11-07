@@ -80,3 +80,95 @@
     <%= button_tag "Limpiar", type: :reset, :class => "btn btn-danger"%>
   </center>
 <% end %>
+
+<script>
+
+
+$("#form").bootstrapValidator({
+  feedbackIcons: {
+    valid: 'glyphicon glyphicon-ok',
+    invalid: 'glyphicon glyphicon-remove',
+    validating: 'glyphicon glyphicon-refresh'
+
+  },
+  fields: {
+    tdo_cont:{
+      validators:{
+        notEmpty:{
+          message: 'Seleccione tipo de documento'
+        }
+      }
+    },
+    ter_iden:{
+      validators:{
+        stringLength: {
+          min: 8,
+          message: 'Cantidad mínima de caracteres 8'
+        },
+        notEmpty:{
+          message: 'Ingrese número de documento'
+        }
+      }
+    },
+    ter_pnom:{
+      validators:{
+        stringLength: {
+          min: 3,
+          message: 'Cantidad mínima de caracteres 3'
+        },
+        notEmpty:{
+          message: 'Ingrese un nombre'
+        }
+      }
+    },
+    ter_pape:{
+      validators:{
+        stringLength: {
+          min: 3,
+          message: 'Cantidad mínima de caracteres 3'
+        },
+        notEmpty:{
+          message: 'Ingrese un apellido'
+        }
+      }
+    },
+    tus_cont:{
+      notEmpty:{
+        message: 'Seleccione tipo de usuario'
+      }
+    },
+    ter_pass:{
+      validators:{
+        stringLength: {
+          min: 8,
+          message: 'Cantidad mínima de caracteres 8'
+        },
+        notEmpty:{
+          message: 'Ingrese una contraseña'
+        }
+      }
+    },
+    confirmar: {
+      validators: {
+        identical: {
+          field: 'ter_pass',
+          message: 'Las contraseñas no coinciden'
+        }
+      }
+    },
+    ter_acti:{
+      validators:{
+        notEmpty:{
+          message: 'Seleccione un estado'
+        }
+      }
+    }
+
+
+  }
+})
+.on('success.form.bv', function(e){
+
+});
+
+</script>

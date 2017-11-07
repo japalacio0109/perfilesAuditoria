@@ -35,6 +35,18 @@ class GnTercController < ApplicationController
   #   response json: {mensaje: mensaje, tipo: tipo}
   # end
 
+  def check_document
+   if request.post?
+     if GnTerc.find_by(ter_iden: ajax_params[:ter_cont])
+       value = false
+     else
+       value = true
+
+     end
+     render json: {valid: value}
+   end
+ end
+
   def save
     if form_params[:ter_cont] == "" or form_params[:ter_cont] == nil
       oldd = nil
@@ -68,6 +80,10 @@ class GnTercController < ApplicationController
     nuevo.ter_onli = 0
     if nuevo.save
       dba_aprob = 1
+      nuevo.ter_pass = "[FILTERED]"
+      if oldd
+        oldd["ter_pass"] = "[FILTERED]"
+      end
       resolve_log(nuevo.as_json,oldd,session[:user],dba_aprob,dba_dpro)
       flash[:success] = "Acción exitosa"
     else

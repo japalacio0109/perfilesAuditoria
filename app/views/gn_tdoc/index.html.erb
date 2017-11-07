@@ -55,7 +55,7 @@
   </div>
   <script>
   window._token = "<%= form_authenticity_token %>";
-  
+
 function mostrar(id) {
   $.ajax({
     url: "<%= tdocshow_url%>",
@@ -112,6 +112,33 @@ function borrar(id) {
 
 $(".mostrar").on('click', function(event) {
     $(this).parent().parent().remove();
+});
+
+
+$("#form").bootstrapValidator({
+  feedbackIcons: {
+    valid: 'glyphicon glyphicon-ok',
+    invalid: 'glyphicon glyphicon-remove',
+    validating: 'glyphicon glyphicon-refresh'
+
+  },
+  fields: {
+    tdo_desc:{
+      validators:{
+        stringLength: {
+          min: 8,
+          message: 'Cantidad mínima de caracteres 8'
+        },
+        notEmpty:{
+          message: 'Ingrese una descripción'
+        }
+      }
+    }
+
+  }
+})
+.on('success.form.bv', function(e){
+
 });
 
   </script>

@@ -114,6 +114,32 @@ $(".mostrar").on('click', function(event) {
     $(this).parent().parent().remove();
 });
 
+$("#form").bootstrapValidator({
+  feedbackIcons: {
+    valid: 'glyphicon glyphicon-ok',
+    invalid: 'glyphicon glyphicon-remove',
+    validating: 'glyphicon glyphicon-refresh'
+
+  },
+  fields: {
+    tus_desc:{
+      validators:{
+        stringLength: {
+          min: 8,
+          message: 'Cantidad mínima de caracteres 8'
+        },
+        notEmpty:{
+          message: 'Ingrese una descripción'
+        }
+      }
+    }
+
+  }
+})
+.on('success.form.bv', function(e){
+
+});
+
   </script>
 
 </div>
