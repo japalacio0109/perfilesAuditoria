@@ -44,8 +44,10 @@
             <td><%= row.tus_cont%></td>
             <td><%= row.tus_desc.titleize%></td>
             <td>
-              <a onclick="mostrar(<%=row.tus_cont%>)" class="btn btn-xs btn-default"><i class="fa fa-search"></i> Ver/Modificar</a>
-              <a onclick="borrar(<%=row.tus_cont%>)" class="btn btn-xs btn-danger mostrar"><i class="fa fa-trash"></i> Borrar</a>
+              <% if row.tus_cont > 2 %>
+                <a onclick="mostrar(<%=row.tus_cont%>)" class="btn btn-xs btn-default"><i class="fa fa-search"></i> Ver/Modificar</a>
+                <a onclick="borrar(<%=row.tus_cont%>)" class="btn btn-xs btn-danger mostrar"><i class="fa fa-trash"></i> Borrar</a>
+              <% end %>
             </td>
           </tr>
           <% end %>
@@ -56,58 +58,70 @@
   <script>
   window._token = "<%= form_authenticity_token %>";
 function mostrar(id) {
-  $.ajax({
-    url: "<%= tusushow_url%>",
-    type: "POST",
-    contextType: "json",
-    data: {authenticity_token: window._token,
-            form: {
-              id: id
-            }
-          },
-    success: function(data, textStatus, jqXHR){
-      if (data != null) {
-        $("#tus_desc").val(data["tus_desc"]);
-        $("#tus_cont").val(data["tus_cont"]);
+  if (id > 2) {
+    $.ajax({
+      url: "<%= tusushow_url%>",
+      type: "POST",
+      contextType: "json",
+      data: {authenticity_token: window._token,
+              form: {
+                id: id
+              }
+            },
+      success: function(data, textStatus, jqXHR){
+        if (data != null) {
+          $("#tus_desc").val(data["tus_desc"]);
+          $("#tus_cont").val(data["tus_cont"]);
 
-      }else{
-        $("#response").html("<div class='alert alert-danger'>No se Encontró el registro</div>");
+        }else{
+          $(".responses").html("<div class='alert alert-danger'>No se Encontró el registro</div>");
+        }
+      },
+      error: function(data, textStatus, jqXHR){
+        console.log(jqXHR);
       }
-    },
-    error: function(data, textStatus, jqXHR){
-      console.log(jqXHR);
-    }
-  });
+    });
+  }else {
+    $(".responses").html("<div class='alert alert-danger'>No se permite editar este registro</div>");
+
+  }
+
 }
 
 function borrar(id) {
-  console.log(id);
-  $.ajax({
-    url: "<%= tusudelete_url%>",
-    type: "POST",
-    contextType: "json",
-    data: {authenticity_token: window._token,
-            form: {
-              id: id
-            }
-          },
-    success: function(data, textStatus, jqXHR){
-      if (data != null) {
-        if (data["tipo"] == "success") {
+  if (id > 2) {
+    $.ajax({
+      url: "<%= tusudelete_url%>",
+      type: "POST",
+      contextType: "json",
+      data: {authenticity_token: window._token,
+              form: {
+                id: id
+              }
+            },
+      success: function(data, textStatus, jqXHR){
+        if (data != null) {
+          if (data["tipo"] == "success") {
+
+          }
+          $(".responses").html("<div class='alert alert-"+data["tipo"]+"'>"+data["mensaje"]+"</div>")
+
+        }else{
+          $(".responses").html("<div class='alert alert-danger'> Error, intente más tarde</div>")
 
         }
-        $(".responses").html("<div class='alert alert-"+data["tipo"]+"'>"+data["mensaje"]+"</div>")
-
-      }else{
-        $(".responses").html("<div class='alert alert-danger'> Error, intente más tarde</div>")
-
+        console.log(data);
+      },
+      error: function(data, textStatus, jqXHR){
+        console.log(jqXHR);
       }
-      console.log(data);
-    },
-    error: function(data, textStatus, jqXHR){
-      console.log(jqXHR);
-    }
-  });
+    });
+  }
+  else{
+    $(".responses").html("<div class='alert alert-danger'>No se permite eliminar este registro</div>");
+
+  }
+
 }
 
 $(".mostrar").on('click', function(event) {
@@ -130,6 +144,20 @@ $("#form").bootstrapValidator({
         },
         notEmpty:{
           message: 'Ingrese una descripción'
+        },
+        remote: {
+          url: '<%= tuscheck_desc_url%>',
+          data: function(validator) {
+                     return {
+                        authenticity_token: window._token,
+                        form: {
+                         val: $('#tus_desc').val(),
+                         id: $('#tus_cont').val()
+                       }
+                     };
+                  },
+          type: 'POST',
+          message: 'Descripción no disponible'
         }
       }
     }

@@ -6,6 +6,26 @@ class GnTusuController < ApplicationController
     @t_result = GnTusu.all
   end
 
+  def check_desc
+   if request.post?
+     if ajax_params[:id] == nil or ajax_params[:id] == ""
+       if GnTusu.find_by(tus_desc: ajax_params[:val])
+         value = false
+       else
+         value = true
+       end
+     else
+       if GnTusu.find_by("tus_desc = ? AND tus_cont <> ?",ajax_params[:val],ajax_params[:id])
+         value = false
+       else
+         value = true
+
+       end
+     end
+     render json: {valid: value}
+   end
+  end
+
   def save
     if form_params[:tus_cont] == "" or form_params[:tus_cont] == nil
       oldd = nil
@@ -26,7 +46,7 @@ class GnTusuController < ApplicationController
 
     end
 
-    nuevo.tus_desc = form_params[:tus_desc]
+    nuevo.tus_desc = form_params[:tus_desc].downcase
     if nuevo.save
       dba_aprob = 1
       resolve_log(nuevo.as_json,oldd,session[:user],dba_aprob,dba_dpro)
@@ -64,5 +84,9 @@ class GnTusuController < ApplicationController
 
   def show_params
     params.require(:form).permit(:id)
+  end
+
+  def ajax_params
+    params.require(:form).permit(:id,:val)
   end
 end

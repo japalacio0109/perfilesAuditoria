@@ -37,15 +37,45 @@ class GnTercController < ApplicationController
 
   def check_document
    if request.post?
-     if GnTerc.find_by(ter_iden: ajax_params[:ter_cont])
-       value = false
+     if ajax_params[:id] == nil or ajax_params[:id] == ""
+       if GnTerc.find_by(ter_iden: ajax_params[:val])
+         value = false
+       else
+         value = true
+       end
      else
-       value = true
+       if GnTerc.find_by("ter_iden = ? AND ter_cont <> ?",ajax_params[:val],ajax_params[:id])
+         value = false
+       else
+         value = true
 
+       end
      end
      render json: {valid: value}
    end
- end
+  end
+
+  def check_user
+   if request.post?
+     if ajax_params[:id] == nil or ajax_params[:id] == ""
+       if GnTerc.find_by(ter_usua: ajax_params[:val])
+         value = false
+       else
+         value = true
+       end
+     else
+       if GnTerc.find_by("ter_usua = ? AND ter_cont <> ?",ajax_params[:val],ajax_params[:id])
+         value = false
+       else
+         value = true
+
+       end
+     end
+     render json: {valid: value}
+   end
+  end
+
+
 
   def save
     if form_params[:ter_cont] == "" or form_params[:ter_cont] == nil
@@ -69,11 +99,11 @@ class GnTercController < ApplicationController
 
     nuevo.tdo_cont = form_params[:tdo_cont]
     nuevo.ter_iden = form_params[:ter_iden]
-    nuevo.ter_pnom = form_params[:ter_pnom]
-    nuevo.ter_snom = form_params[:ter_snom]
-    nuevo.ter_pape = form_params[:ter_pape]
-    nuevo.ter_sape = form_params[:ter_sape]
-    nuevo.ter_usua = form_params[:ter_usua]
+    nuevo.ter_pnom = form_params[:ter_pnom].downcase
+    nuevo.ter_snom = form_params[:ter_snom].downcase
+    nuevo.ter_pape = form_params[:ter_pape].downcase
+    nuevo.ter_sape = form_params[:ter_sape].downcase
+    nuevo.ter_usua = form_params[:ter_usua].downcase
     nuevo.ter_pass =  Digest::SHA1.hexdigest(form_params[:ter_pass])
     nuevo.tus_cont = form_params[:tus_cont]
     nuevo.ter_acti = form_params[:ter_acti]
@@ -113,6 +143,10 @@ class GnTercController < ApplicationController
 
   def show_params
     params.require(:form).permit(:id)
+  end
+
+  def ajax_params
+    params.require(:form).permit(:id,:val)
   end
 
 end

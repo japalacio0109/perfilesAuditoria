@@ -6,6 +6,27 @@ class AuCrudController < ApplicationController
     @t_result = AuCrud.all
   end
 
+
+  def check_desc
+   if request.post?
+     if ajax_params[:id] == nil or ajax_params[:id] == ""
+       if AuCrud.find_by(cru_desc: ajax_params[:val])
+         value = false
+       else
+         value = true
+       end
+     else
+       if AuCrud.find_by("cru_desc = ? AND cru_cont <> ?",ajax_params[:val],ajax_params[:id])
+         value = false
+       else
+         value = true
+
+       end
+     end
+     render json: {valid: value}
+   end
+  end
+
   def save
     if form_params[:cru_cont] == "" or form_params[:cru_cont] == nil
       oldd = nil
@@ -25,10 +46,10 @@ class AuCrudController < ApplicationController
       dba_dpro = 4
     end
 
-    nuevo.cru_desc = form_params[:cru_desc]
+    nuevo.cru_desc = form_params[:cru_desc].downcase
     if nuevo.save
       dba_aprob = 1
-      resolve_log(nuevo.as_json,oldd,session[:user],dba_aprob,dba_dpro)
+      resolve_log(nuevo.as_json,oldd,session[:user],dba_aprob,AuCrud.find_by(cru_desc: request.method.downcase).cru_cont)
       flash[:success] = "Acción exitosa"
     else
       flash[:danger] = "Error, intente de nuevo mas tarde"
@@ -39,7 +60,7 @@ class AuCrudController < ApplicationController
   def show
     busq = AuCrud.find_by(cru_cont: show_params[:id])
     dba_aprob = 1
-    resolve_log(nuevo.as_json,oldd.as_json,session[:user],dba_aprob,nil)
+    resolve_log(busq.as_json,nil,session[:user],dba_aprob,nil)
     render json: busq
   end
 
@@ -64,6 +85,10 @@ class AuCrudController < ApplicationController
 
   def show_params
     params.require(:form).permit(:id)
+  end
+
+  def ajax_params
+    params.require(:form).permit(:id,:val)
   end
 
 end

@@ -72,7 +72,7 @@ function mostrar(id) {
         $("#tdo_cont").val(data["tdo_cont"]);
 
       }else{
-        $("#response").html("<div class='alert alert-danger'>No se Encontró el registro</div>");
+        $(".responses").html("<div class='alert alert-danger'>No se Encontró el registro</div>");
       }
     },
     error: function(data, textStatus, jqXHR){
@@ -131,6 +131,20 @@ $("#form").bootstrapValidator({
         },
         notEmpty:{
           message: 'Ingrese una descripción'
+        },
+        remote: {
+          url: '<%= tdoccheck_desc_url%>',
+          data: function(validator) {
+                     return {
+                        authenticity_token: window._token,
+                        form: {
+                         val: $('#tdo_desc').val(),
+                         id: $('#tdo_cont').val()
+                       }
+                     };
+                  },
+          type: 'POST',
+          message: 'Descripción no disponible'
         }
       }
     }
