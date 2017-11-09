@@ -11,7 +11,7 @@
   <div class="form-group">
     <%= label_tag 'ter_iden', 'Nº de Documento', :class => "control-label col-md-4 col-sm-4 col-xs-12"%>
     <div class="col-md-3 col-sm-3 col-xs-12">
-      <%= number_field_tag "ter_iden", @nuevo.ter_iden,:class => "form-control"%>
+      <%= number_field_tag "ter_iden", @nuevo.ter_iden,{:class => "form-control"}%>
     </div>
   </div>
   <div class="form-group">
@@ -108,6 +108,11 @@
           },
           notEmpty:{
             message: 'Ingrese número de documento'
+          },
+          between: {
+            min: 0,
+            max: 999999999999999,
+            message: 'No se permiten números Negativos'
           },
           remote: {
             url: '<%= tercdocument_url%>',
