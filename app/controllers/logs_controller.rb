@@ -13,7 +13,25 @@ class LogsController < ApplicationController
         if params[:fina].include? "T"
           params[:fina] = params[:fina].sub! 'T',' '
         end
-        result += " AND dba_fech BETWEEN '#{params[:fini]}' and '#{params[:fina]}'"
+        if params[:fini] < params[:fina]
+          # result += " AND dba_fech BETWEEN '#{params[:fini]}' and '#{params[:fina]}'"
+          if params[:fini] <= Time.now
+            if  params[:fina] <= Time.now
+              fina = "'#{params[:fina]}'"
+            else
+              fina = "NOW()"
+            end
+            p fina
+            result += " AND dba_fech BETWEEN '#{params[:fini]}' and #{fina}"
+          else
+            flash[:danger] = "Error de ingreso de fecha, el rango que se especifica es mayor a la fecha actual"
+            redirect_to logs_url
+          end
+        else
+          flash[:danger] = "Error de ingreso de fecha, la fecha inicial debe ser menor a la final"
+          redirect_to logs_url
+        end
+
 
       end
       if params[:usua] != nil and params[:usua] != ""
@@ -36,6 +54,10 @@ class LogsController < ApplicationController
       @t_result = AuDbau.where("#{result}").page params[:page]
     else
       @t_result = AuDbau.all.page params[:page]
+
+    end
+    if @t_result.count == 0
+      flash[:danger] = "No se encontraron registros"
 
     end
     @t_field = ["Nº","Fecha/Hora","Tipo de Petición","Ruta de Acceso","IP - Nombre Equipo","Usuario","Parámetros","Datos de Proceso","Estado"]

@@ -40,7 +40,6 @@ class ApplicationController < ActionController::Base
 
   def usuario
     busq = find_user
-    p cru_cont
     if busq.tus_cont == 3
       dba_aprob = 1
       resolve_log(nil,nil,session[:user],dba_aprob,nil)

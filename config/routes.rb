@@ -45,5 +45,6 @@ Rails.application.routes.draw do
   post 'au_crud/delete', to: 'au_crud#delete', as: "cruddelete"
   post 'au_crud/desc', to: 'au_crud#check_desc', as: "crudcheck_desc"
 
+  root to: "home#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
