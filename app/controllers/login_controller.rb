@@ -1,7 +1,9 @@
 class LoginController < ApplicationController
   layout false
   def index
-
+    if session[:user]
+      redirect_to home_url
+    end
     dba_aprob = 1
     resolve_log(nil,nil,session[:user],dba_aprob,nil)
   end
@@ -29,7 +31,7 @@ class LoginController < ApplicationController
             flash[:warning] = "Excedió el límite de intentos de inicio de sesión"
             dba_aprob = 0
             routing = login_url
-            
+
           else
             busq.ter_inte = busq.ter_inte + 1
             busq.save
